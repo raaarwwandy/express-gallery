@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataType) {
   var Gallery = sequelize.define("Gallery", {
     author: DataType.STRING,
     link: DataType.STRING,
-    description: DataType.TEXT
+    description: DataType.STRING
   });
   return Gallery;
 };
