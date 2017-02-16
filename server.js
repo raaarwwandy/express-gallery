@@ -6,8 +6,11 @@ const bodyParser = require('body-parser');
 const gallery = require('./routes/gallery');
 const app = express();
 const db = require('./models');
+const methodOverride = require('method-override');
 let Gallery = db.Gallery;
+
 app.use(bodyParser.urlencoded({ extended: true}));
+app.use(methodOverride('X-HTTP-Method-Override'));
 
 const hbs = handlebars.create({
   extname: '.hbs',
@@ -19,12 +22,16 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 app.listen(3000, function() {
-  console.log('sever started');
+  console.log('server started');
   db.sequelize.sync();
 });
 
 app.get('/', (req, res) =>{
-  res.render('layouts/index', Gallery);
+  console.log('is this getting there?', req.params.id);
+  Gallery.findAll()
+  .then((app) =>{
+  res.render('gallery/main', {app: app});
+  });
 });
 
 app.use('/gallery', gallery);
