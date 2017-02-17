@@ -1,0 +1,17 @@
+<h1>this is gonna be the edit page</h1>
+
+
+{{#if gallery}}
+  <div class="post">
+  <h1>Author:{{gallery.author}}</h1>
+  <img src="{{gallery.link}}">
+  <h1>Description: {{gallery.description}}</h1>
+  </div>
+{{/if}}
+
+<form id="updateForm" action="/gallery/{{gallery.id}}?_method=put" method="POST">
+<input type='text' name = "author" value = '{{gallery.author}}'><br>
+<input type='text' name = 'link' value ='{{gallery.link}}'><br>
+<input type='text' name = 'description' value ='{{gallery.description}}'><br>
+<input type='submit' value='Update Content'>
+</form>

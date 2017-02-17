@@ -10,7 +10,7 @@ const methodOverride = require('method-override');
 let Gallery = db.Gallery;
 
 app.use(bodyParser.urlencoded({ extended: true}));
-app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(methodOverride('_method'));
 
 const hbs = handlebars.create({
   extname: '.hbs',
