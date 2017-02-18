@@ -9,9 +9,14 @@
   </div>
 {{/if}}
 
-<form id="updateForm" action="/gallery/{{gallery.id}}?_method=put" method="POST">
+<form id="updateForm" action="/gallery/{{gallery.id}}?_method=PUT" method="POST">
 <input type='text' name = "author" value = '{{gallery.author}}'><br>
 <input type='text' name = 'link' value ='{{gallery.link}}'><br>
 <input type='text' name = 'description' value ='{{gallery.description}}'><br>
-<input type='submit' value='Update Content'>
+<input type='submit' value='Update Post'>
 </form>
+
+<form id ="deletePost" action="/gallery/{{gallery.id}}?_method=delete" method="POST">
+<input type = 'submit' value = 'Delete Post'>
+</form>
+

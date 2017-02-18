@@ -7,10 +7,48 @@ const gallery = require('./routes/gallery');
 const app = express();
 const db = require('./models');
 const methodOverride = require('method-override');
+const CONFIG = require('./config/config');
+let Users = db.Users;
+
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+
 let Gallery = db.Gallery;
 
 app.use(bodyParser.urlencoded({ extended: true}));
+
 app.use(methodOverride('_method'));
+
+app.use(session({
+  secret : CONFIG.SESSION_SECRET
+}));
+
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+
+passport.use(new LocalStrategy(
+  Users.findOne({
+    username, 
+    password
+  })
+  .then((user) =>{
+    return done(null, user);
+  }) .catch ((err) =>{
+    return done(null, false, {message: 'Incorrect username.'});
+  })
+));
+
+passport.serializeUser(function(user, done) {
+  return done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  return done(null, user);
+});
+
 
 const hbs = handlebars.create({
   extname: '.hbs',
@@ -35,5 +73,29 @@ app.get('/', (req, res) =>{
 });
 
 app.use('/gallery', gallery);
+
+//user 
+
+app.get('/login', (req, res) =>{
+  res.render('gallery/login');
+});
+
+app.get('/secret', isAuthenticated, (req, res) =>{
+  res.render('gallery/secret');
+});
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/secret',
+  failureRedirect: '/login'
+}));
+
+function isAuthenticated(req, res, next){
+  if(req.isAuthenticated()){
+    next();
+  } else {
+    console.log('nope');
+    res.redirect('/login');
+  }
+}
 
 module.exports = app;

@@ -6,7 +6,6 @@ const db = require('../models');
 let Gallery = db.Gallery;
 
 router.get('/', (req, res) =>{
-  console.log('this reders all the galleres');
   Gallery.findAll()
   .then((gallery) => {
   res.render('gallery/gallery', {gallery: gallery});
@@ -14,7 +13,6 @@ router.get('/', (req, res) =>{
 });
 
 router.post('/', (req, res) =>{
-  console.log('post has been sucessful', req.body);
   Gallery.create({ 
     author : req.body.author, 
     link : req.body.link, 
@@ -28,7 +26,6 @@ router.post('/', (req, res) =>{
 
 
 router.get('/new', (req, res) =>{
-  console.log('this is making a post');
   res.render('gallery/new', {'postForm': req.body});
 });
 
@@ -45,7 +42,6 @@ router.get('/:id', (req, res) =>{
 
 
 router.get('/:id/edit', (req, res) =>{
-  console.log('this should pull up the edit page');
   Gallery.findOne({
     where : {id: req.params.id}
   })
@@ -55,7 +51,6 @@ router.get('/:id/edit', (req, res) =>{
 });
 
 router.put('/:id', (req, res) =>{
-  console.log('this upated id',req.params);
   Gallery.update({
     author : req.body.author, 
     link : req.body.link, 
@@ -68,6 +63,14 @@ router.put('/:id', (req, res) =>{
   });
 });
 
+router.delete('/:id', (req, res) =>{
+  Gallery.destroy({
+    where : {id: req.params.id}
+  })
+  .then((photo) =>{
+    res.redirect(303, '/gallery');
+  });
+});
 
 
 
