@@ -5,15 +5,16 @@ const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const gallery = require('./routes/gallery');
 const app = express();
-const db = require('./models');
 const methodOverride = require('method-override');
 const CONFIG = require('./config/config');
-let Users = db.Users;
+const gulp = require('gulp');
 
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
+const db = require('./models');
+let User = db.User;
 let Gallery = db.Gallery;
 
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -30,15 +31,17 @@ app.use(passport.session());
 
 
 passport.use(new LocalStrategy(
-  Users.findOne({
-    username, 
-    password
-  })
-  .then((user) =>{
-    return done(null, user);
-  }) .catch ((err) =>{
-    return done(null, false, {message: 'Incorrect username.'});
-  })
+  function(username, password, done){
+    User.findOne({
+      where: {username: username, 
+      password: password}
+      })
+      .then((user) =>{
+      return done(null, user);
+      }) .catch ((err) =>{
+      return done(null, false, {message: 'Incorrect username.'});
+    });
+  }
 ));
 
 passport.serializeUser(function(user, done) {
@@ -77,11 +80,15 @@ app.use('/gallery', gallery);
 //user 
 
 app.get('/login', (req, res) =>{
-  res.render('gallery/login');
+  res.render('user/login');
 });
 
-app.get('/secret', isAuthenticated, (req, res) =>{
-  res.render('gallery/secret');
+app.get('/gallery', isAuthenticated, (req, res) =>{
+  res.render('gallery/gallery');
+});
+
+app.get('/signup', (req, res) =>{
+  res.render('user/makeUser', {'makeUser': req.body});
 });
 
 app.post('/login', passport.authenticate('local', {
