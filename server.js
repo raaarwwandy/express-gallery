@@ -62,6 +62,8 @@ app.engine('hbs', hbs.engine);
 
 app.set('view engine', 'hbs');
 
+app.use(express.static('public'));
+
 app.listen(3000, function() {
   console.log('server started');
   db.sequelize.sync();
@@ -91,10 +93,23 @@ app.get('/signup', (req, res) =>{
   res.render('user/makeUser', {'makeUser': req.body});
 });
 
+app.post('/signup', (req, res) =>{
+  User.create({
+    username: req.body.username,
+    password: req.body.password
+  })
+  .then((user) =>{
+    res.redirect(303, `\login`);
+  });
+});
+
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/secret',
+  successRedirect: '/gallery',
   failureRedirect: '/login'
 }));
+
+
+
 
 function isAuthenticated(req, res, next){
   if(req.isAuthenticated()){

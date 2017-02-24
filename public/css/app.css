@@ -1,0 +1,55 @@
+.header {
+  margin-top: 100px;
+  border-top: solid thin gray;
+  width: 1200px;
+  margin-bottom: 75px; }
+
+#title {
+  color: gray;
+  font-size: 3 rem;
+  float: left;
+  width: 600px; }
+
+#paragraph {
+  width: 400px;
+  font-size: 16px;
+  border-left: solid thin gray;
+  padding-left: 20px; }
+
+@media screen and (max-width: 600px) {
+  .header {
+    background-color: blue; } }
+
+.clearfix:after {
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0; }
+
+.clearfix {
+  display: inline-block; }
+
+/* start commented backslash hack \*/
+* html .clearfix {
+  height: 1%; }
+
+.clearfix {
+  display: block; }
+
+/* close commented backslash hack */
+#container {
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center; }
+
+.post {
+  flex: 1 1 33%;
+  align-items: flex-start; }
+
+.post img {
+  width: 60%;
+  height: 60%; }

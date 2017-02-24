@@ -1,9 +1,10 @@
-<h1> Gallery Page</h1>
 
 {{#each app}}
   <div class="post">
-  <h1>Author:{{author}}</h1>
-  <img src="{{link}}">
-  <h1>Description: {{description}}</h1>
+    <a href="/gallery/{{id}}">
+      <img src="{{link}}">
+      <p>{{author}}</p>
+      <p>{{description}}</p>
+    </a>
   </div>
 {{/each}}

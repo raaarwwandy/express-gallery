@@ -1,0 +1,26 @@
+.header{
+  margin-top: 100px;
+  border-top: solid thin gray;
+  width: 1200px;
+  margin-bottom: 75px;
+}
+
+#title{
+  color: gray;
+  font-size: 3 rem;
+  float: left;
+  width: 600px;
+}
+
+#paragraph{
+  width: 400px;
+  font-size: 16px;
+  border-left: solid thin gray;
+  padding-left: 20px;
+}
+
+@media screen and (max-width: 600px){
+  .header{
+    background-color: blue;
+  }
+}

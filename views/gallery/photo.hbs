@@ -1,13 +1,13 @@
 
-{{#if gallery}}
-  <div class="post">
-  <h1>Author:{{gallery.author}}</h1>
-  <img src="{{gallery.link}}">
-  <h1>Description: {{gallery.description}}</h1>
-  </div>
-{{/if}}
-
-
 <form id = "editPost" action='/gallery/{{gallery.id}}/edit/'>
 <input type= 'submit' value="Edit Post">
 </form>
+
+{{#if gallery}}
+  <div class="post">
+  <img src="{{gallery.link}}">
+  <h1>Author:{{gallery.author}}</h1>
+  <p>{{gallery.description}}</p>
+  </div>
+{{/if}}
+
