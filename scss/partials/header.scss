@@ -1,15 +1,15 @@
 .header{
-  margin-top: 100px;
   border-top: solid thin gray;
   width: 1200px;
-  margin-bottom: 75px;
+  margin: 0 auto;
+  margin-top: 10%;
+
 }
 
 #title{
   color: gray;
-  font-size: 3 rem;
   float: left;
-  width: 600px;
+  font-size: 5em;
 }
 
 #paragraph{
@@ -17,10 +17,6 @@
   font-size: 16px;
   border-left: solid thin gray;
   padding-left: 20px;
+  float: right;
 }
 
-@media screen and (max-width: 600px){
-  .header{
-    background-color: blue;
-  }
-}

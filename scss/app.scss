@@ -1,22 +1,5 @@
 @import "./partials/header";
 @import "./partials/_clearfix";
+@import "./partials/_reset";
 @import "./partials/details";
-
-#container{
-  width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-}
-
-.post{
-  flex: 1 1 33%;
-  align-items: flex-start;
-}
-
-.post img{
-  width: 60%;
-  height: 60%;
-}
-
+@import "./partials/gallery";

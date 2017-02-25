@@ -17,6 +17,9 @@ const db = require('./models');
 let User = db.User;
 let Gallery = db.Gallery;
 
+const saltRounds = 15; 
+const bcrypt = require('bcrypt');
+
 app.use(bodyParser.urlencoded({ extended: true}));
 
 app.use(methodOverride('_method'));
@@ -29,20 +32,40 @@ app.use(passport.initialize());
 
 app.use(passport.session());
 
+function checkPassword(plainTextPassword, passwordInDb){
+  return bcrypt.compare(plainTextPassword, passwordInDb, function(err, res){
+    return res;
+  });
+}
 
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy (
   function(username, password, done){
     User.findOne({
-      where: {username: username, 
-      password: password}
-      })
-      .then((user) =>{
-      return done(null, user);
-      }) .catch ((err) =>{
-      return done(null, false, {message: 'Incorrect username.'});
-    });
-  }
-));
+      where : {
+        username : username
+      }
+    }).then(user =>{
+      if(user === null){
+        console.log('user failed')
+        return done(null, false, {message: 'bad password'})
+      } else {
+
+        bcrypt.compare(password, user.password).then(res =>{
+          if (res) {
+            return done(null, user);
+          } else { 
+            return done(null, false, {message: 'bad password'})
+          }
+        })
+      }
+    }).catch(err => {
+      console.log('error: ', err)
+    })
+    }
+  ))
+
+
+
 
 passport.serializeUser(function(user, done) {
   return done(null, user);
@@ -94,14 +117,20 @@ app.get('/signup', (req, res) =>{
 });
 
 app.post('/signup', (req, res) =>{
-  User.create({
-    username: req.body.username,
-    password: req.body.password
-  })
-  .then((user) =>{
-    res.redirect(303, `\login`);
+  bcrypt.genSalt(saltRounds, function(err, salt){
+    bcrypt.hash(req.body.password, salt, function(err, hash){
+      console.log('hash', hash);
+          User.create({
+          username: req.body.username,
+          password: hash
+        })
+        .then((user) =>{
+          res.redirect(303, `\login`);
+        });
+      });
   });
 });
+
 
 app.post('/login', passport.authenticate('local', {
   successRedirect: '/gallery',
