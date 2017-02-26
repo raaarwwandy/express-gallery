@@ -1,12 +1,28 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Express Photo Gallery</title>
-</head>
-<body>
-  
-    {{{body}}}
+{{#if username}}
+  <h1>WELCOME {{username}}</h1>
+  <form id="postPic" action="/gallery/new" method="get"><input type="submit" name="post" value="post a Image">
+  </form>
+  <form id="logout" action="/logout" method="get">
+  <input type="submit" value="Log Out">
+  </form>
+  {{else}}
+  <form action="/login" method="get">
+    <div>
+        <input type="submit" name="username" value="LOG IN"/>
+    </div>
+    
+</form>
+{{/if}}
 
-</body>
-</html>
+
+{{#each gallery}}
+  <div class="post">
+    <a href="/gallery/{{id}}">
+    
+    <img src="{{link}}">
+    
+    <p>{{author}}</p>
+    <p>{{description}}</p>
+    </a>
+  </div>
+{{/each}}

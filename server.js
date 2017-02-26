@@ -1,4 +1,4 @@
-/*jshint esversion:6 */
+ /*jshint esversion:6 */
 
 const express = require('express');
 const handlebars = require('express-handlebars');
@@ -8,8 +8,9 @@ const app = express();
 const methodOverride = require('method-override');
 const CONFIG = require('./config/config');
 const gulp = require('gulp');
-
 const session = require('express-session');
+const RedisStore = require('connect-redis')(
+  session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -25,7 +26,10 @@ app.use(bodyParser.urlencoded({ extended: true}));
 app.use(methodOverride('_method'));
 
 app.use(session({
-  secret : CONFIG.SESSION_SECRET
+  store: new RedisStore(),
+  secret: 'keyboard cat', 
+  resave: false, 
+  saveUnintialized: true
 }));
 
 app.use(passport.initialize());
@@ -62,23 +66,33 @@ passport.use(new LocalStrategy (
       console.log('error: ', err)
     })
     }
+
   ))
 
 
 
 
 passport.serializeUser(function(user, done) {
-  return done(null, user);
+  return done(null, { 
+    id: user.id,
+    username: user.username
+  });
 });
 
 passport.deserializeUser(function(user, done) {
-  return done(null, user);
+  User.findOne({
+    where: {
+      id: user.id
+    }
+  }).then(user =>{
+    return done(null, user);
+  });
 });
 
 
 const hbs = handlebars.create({
   extname: '.hbs',
-  defaultLayout: 'index'
+  defaultLayout: 'app'
 });
 
 app.engine('hbs', hbs.engine);
@@ -87,16 +101,21 @@ app.set('view engine', 'hbs');
 
 app.use(express.static('public'));
 
-app.listen(3000, function() {
-  console.log('server started');
-  db.sequelize.sync();
-});
+  
 
 app.get('/', (req, res) =>{
-  console.log('is this getting there?', req.params.id);
+  let username ;
+  if(req.user){
+    username = req.user.username;
+  } else {
+    username = null;
+  }
   Gallery.findAll()
   .then((app) =>{
-  res.render('gallery/main', {app: app});
+  res.render('./index', {
+    gallery: app,
+    username: username,
+     });
   });
 });
 
@@ -108,12 +127,15 @@ app.get('/login', (req, res) =>{
   res.render('user/login');
 });
 
-app.get('/gallery', isAuthenticated, (req, res) =>{
-  res.render('gallery/gallery');
-});
 
 app.get('/signup', (req, res) =>{
   res.render('user/makeUser', {'makeUser': req.body});
+});
+
+app.get('/logout', function(req, res){
+
+  req.logOut(); 
+  res.redirect('/');
 });
 
 app.post('/signup', (req, res) =>{
@@ -149,4 +171,8 @@ function isAuthenticated(req, res, next){
   }
 }
 
+app.listen(3000, function() {
+  console.log('server started');
+  db.sequelize.sync();
+});
 module.exports = app;

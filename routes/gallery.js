@@ -5,14 +5,11 @@ const router = express.Router();
 const db = require('../models');
 let Gallery = db.Gallery;
 
-router.get('/', (req, res) =>{
-  Gallery.findAll()
-  .then((gallery) => {
-  res.render('gallery/gallery', {gallery: gallery});
-  });
-});
+router.get('/',(req, res) =>{
+  res.redirect('/');
+}); 
 
-router.post('/', (req, res) =>{
+router.post('/', isAuthenticated, (req, res) =>{
   Gallery.create({ 
     author : req.body.author, 
     link : req.body.link, 
@@ -25,7 +22,7 @@ router.post('/', (req, res) =>{
 
 
 
-router.get('/new', (req, res) =>{
+router.get('/new', isAuthenticated, (req, res) =>{
   res.render('gallery/new', {'postForm': req.body});
 });
 
@@ -41,7 +38,7 @@ router.get('/:id', (req, res) =>{
 });
 
 
-router.get('/:id/edit', (req, res) =>{
+router.get('/:id/edit',isAuthenticated, (req, res) =>{
   Gallery.findOne({
     where : {id: req.params.id}
   })
@@ -50,7 +47,7 @@ router.get('/:id/edit', (req, res) =>{
   });
 });
 
-router.put('/:id', (req, res) =>{
+router.put('/:id', isAuthenticated, (req, res) =>{
   Gallery.update({
     author : req.body.author, 
     link : req.body.link, 
@@ -63,7 +60,7 @@ router.put('/:id', (req, res) =>{
   });
 });
 
-router.delete('/:id', (req, res) =>{
+router.delete('/:id',isAuthenticated, (req, res) =>{
   Gallery.destroy({
     where : {id: req.params.id}
   })
@@ -73,6 +70,15 @@ router.delete('/:id', (req, res) =>{
 });
 
 
+function isAuthenticated(req, res, next){
+  console.log('ping')
+  if(req.isAuthenticated()){
+    next();
+  } else {
+    console.log('nope');
+    res.redirect('/login');
+  }
+}
 
 
 module.exports = router;
