@@ -1,9 +1,8 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var Gallery = sequelize.define('Gallery', {
-    author: DataTypes.STRING,
-    link: DataTypes.STRING,
-    description: DataTypes.STRING
+  var User = sequelize.define('User', {
+    username: DataTypes.STRING,
+    password: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
@@ -11,5 +10,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return Gallery;
+  return User;
 };

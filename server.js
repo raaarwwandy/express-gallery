@@ -50,24 +50,22 @@ passport.use(new LocalStrategy (
       }
     }).then(user =>{
       if(user === null){
-        console.log('user failed')
-        return done(null, false, {message: 'bad password'})
+        return done(null, false, {message: 'bad password'});
       } else {
 
         bcrypt.compare(password, user.password).then(res =>{
           if (res) {
             return done(null, user);
           } else { 
-            return done(null, false, {message: 'bad password'})
+            return done(null, false, {message: 'bad password'});
           }
-        })
+        });
       }
     }).catch(err => {
-      console.log('error: ', err)
-    })
-    }
-
-  ))
+      res.end();
+    });
+  }
+));
 
 
 
@@ -133,7 +131,6 @@ app.get('/signup', (req, res) =>{
 });
 
 app.get('/logout', function(req, res){
-
   req.logOut(); 
   res.redirect('/');
 });

@@ -1,22 +1,36 @@
 .header{
   border-top: solid thin gray;
   width: 1200px;
-  margin: 0 auto;
   margin-top: 10%;
+  display: flex;
+  flex-flow: row wrap;
 
 }
 
 #title{
-  color: gray;
-  float: left;
-  font-size: 5em;
+  @include title(10px, gray);
 }
 
 #paragraph{
-  width: 400px;
-  font-size: 16px;
-  border-left: solid thin gray;
-  padding-left: 20px;
-  float: right;
+  width: 200px;
+  
 }
 
+
+
+@media screen and (max-width: 600px ){
+  .header{
+  background-color: blue;
+  width: 75%;
+  }
+
+  #title{
+    text-align: center;
+    width: 75%;
+  }
+
+  #paragraph{
+    display: none;
+  }
+
+}
