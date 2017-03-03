@@ -1,32 +1,48 @@
 .header{
   border-top: solid thin gray;
-  width: 1200px;
   margin-top: 10%;
   display: flex;
   flex-flow: row wrap;
+  justify-content: space-between;
 
 }
 
 #title{
-  @include title(10px, gray);
+    font-size: 5em;
+    color: gray;
+    text-decoration: none;
+    text-align: center;
 }
 
-#paragraph{
-  width: 200px;
-  
+#title a:visitied{
+  text-decoration: none;
+  color: gray;
 }
+
+
+
+
+#paragraph{
+  width: 300px;
+  border-left: solid gray;
+  padding: 20px;
+  font-size: 1em;
+}
+
+
 
 
 
 @media screen and (max-width: 600px ){
   .header{
   background-color: blue;
-  width: 75%;
+  width: 45%;
+  margin: 0 auto;
   }
 
   #title{
     text-align: center;
-    width: 75%;
+    width:45%;
   }
 
   #paragraph{

@@ -26,7 +26,7 @@ router.get('/new', isAuthenticated, (req, res) =>{
   res.render('gallery/new', {'postForm': req.body});
 });
 
-//get element by id 
+
 
 router.get('/:id', (req, res) =>{
   Gallery.findOne({
@@ -71,11 +71,11 @@ router.delete('/:id',isAuthenticated, (req, res) =>{
 
 
 function isAuthenticated(req, res, next){
-  console.log('ping')
+  console.log('USER IS LOGGED IN');
   if(req.isAuthenticated()){
     next();
   } else {
-    console.log('nope');
+    console.log('USER HAS LOGGED OUT');
     res.redirect('/login');
   }
 }

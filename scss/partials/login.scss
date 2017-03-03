@@ -1,0 +1,43 @@
+
+.login{
+  width: 500px;
+  height:10rem;
+  margin-top: 3rem;
+}
+label{
+  color: orange;
+}
+
+input[type=text] {
+       border-radius: 5px 5px 5px 5px;
+-moz-border-radius: 5px 5px 5px 5px;
+-webkit-border-radius: 5px 5px5px5px;
+border: 1px solid  #bfbfbf;
+height: 2rem;
+width: 100%;
+text-align: center;
+}
+
+
+
+input[type=password] {
+  border-radius: 5px 5px 5px 5px;
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px5px5px;
+  border: 1px solid  #bfbfbf;
+  height: 2rem;
+  width: 100%;
+  text-align: center;
+}
+
+
+
+input[type=submit]{
+  -moz-border-radius: 5px 5px 5px 5px;
+  -webkit-border-radius: 5px 5px5px5px;
+  border: 1px solid  #bfbfbf;
+  height: 1.5rem;
+  width: 100%;
+  background-color: white;
+  margin-top: 1rem;
+}

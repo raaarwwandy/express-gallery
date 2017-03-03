@@ -1,10 +1,14 @@
+ <form id = "editPost" action='/gallery/{{gallery.id}}/edit/'>
+    <input type= 'submit' value="Edit Post">
+  </form>
+  
 
-<form id = "editPost" action='/gallery/{{gallery.id}}/edit/'>
-<input type= 'submit' value="Edit Post">
-</form>
+  <form id = "deletePost" action='/gallery/{{gallery.id}}/delete/'>
+    <input type= 'submit' value="Delete Post">
+  </form>
 
 {{#if gallery}}
-  <div class="post">
+  <div class="photo">
   <img src="{{gallery.link}}">
   <h1>Author:{{gallery.author}}</h1>
   <p>{{gallery.description}}</p>

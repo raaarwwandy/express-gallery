@@ -3,14 +3,10 @@
 @import "./partials/_reset";
 @import "./partials/details";
 @import "./partials/gallery";
-@import "./partials/mixin"; 
+@import "./partials/login";
+@import "./partials/edit";
 
-
-.body{
+body{
+  width: 75%;
   margin: 0 auto;
-  width: 100%;
-}
-
-aside{
-  display: block;
 }

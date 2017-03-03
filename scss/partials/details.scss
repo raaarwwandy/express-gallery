@@ -1,0 +1,18 @@
+.photo{
+  height: 100%;
+  width: 100%;
+}
+
+#detailMenu{
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+#editPost{
+  width: 45%;
+}
+
+#deletePost{
+  width:45%;
+}

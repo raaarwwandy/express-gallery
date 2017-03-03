@@ -138,13 +138,12 @@ app.get('/logout', function(req, res){
 app.post('/signup', (req, res) =>{
   bcrypt.genSalt(saltRounds, function(err, salt){
     bcrypt.hash(req.body.password, salt, function(err, hash){
-      console.log('hash', hash);
           User.create({
           username: req.body.username,
           password: hash
         })
         .then((user) =>{
-          res.redirect(303, `\login`);
+          res.redirect(303, '/login');
         });
       });
   });
